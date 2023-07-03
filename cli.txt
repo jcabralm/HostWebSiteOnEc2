@@ -1,0 +1,60 @@
+
+[ec2-user@ip-172-31-82-143 ~]$ sudo su -
+[root@ip-172-31-82-143 ~]# yum update -y
+[root@ip-172-31-92-116 /]# yum install -y httpd
+[root@ip-172-31-92-116 /]# systemctl status httpd
+[root@ip-172-31-92-116 /]# mkdir temp
+[root@ip-172-31-92-116 /]# cd temp/
+[root@ip-172-31-92-116 temp]# wget https://www.free-css.com/assets/files/free-css-templates/download/page291/gamepa
+d.zip
+[root@ip-172-31-92-116 temp]# ls -lrt
+[root@ip-172-31-92-116 temp]# unzip gamepad.zi
+[root@ip-172-31-92-116 temp]# ls -lrt
+total 3032
+-rw-r--r-- 1 root root 3101576 Aug 19  2021 gamepad.zip
+drwxr-xr-x 5 root root     153 Jul  3 10:14 html
+[root@ip-172-31-92-116 temp]# cd html
+[root@ip-172-31-92-116 html]# ls -lrt
+total 64
+drwxr-xr-x 2 root root  4096 Dec 18  2019 css
+drwxr-xr-x 2 root root   303 Dec 18  2019 images
+drwxr-xr-x 2 root root  4096 Dec 18  2019 js
+-rw-r--r-- 1 root root  7011 Apr 28  2020 video.html
+-rw-r--r-- 1 root root  7649 Apr 28  2020 remot.html
+-rw-r--r-- 1 root root  7857 Apr 28  2020 contact.html
+-rw-r--r-- 1 root root  6951 Apr 28  2020 about.html
+-rw-r--r-- 1 root root  7796 Apr 28  2020 product.html
+-rw-r--r-- 1 root root 15003 Apr 28  2020 index.html
+
+***Now, move this file from html to the folder name
+[root@ip-172-31-92-116 html]# mv * /var/www/html/
+[root@ip-172-31-92-116 html]# cd /var/www/html/
+
+**Check if the server httpd is running
+[root@ip-172-31-92-116 html]# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:httpd.service(8)
+
+[root@ip-172-31-92-116 html]# systemctl enable httpd
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+[root@ip-172-31-92-116 html]# ^C
+[root@ip-172-31-92-116 html]# systemctl start httpd
+[root@ip-172-31-92-116 html]# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Mon 2023-07-03 10:24:09 UTC; 7s ago
+     Docs: man:httpd.service(8)
+ Main PID: 368 (httpd)
+   Status: "Processing requests..."
+   CGroup: /system.slice/httpd.service
+           ├─368 /usr/sbin/httpd -DFOREGROUND
+           ├─369 /usr/sbin/httpd -DFOREGROUND
+           ├─370 /usr/sbin/httpd -DFOREGROUND
+           ├─371 /usr/sbin/httpd -DFOREGROUND
+           ├─372 /usr/sbin/httpd -DFOREGROUND
+           └─373 /usr/sbin/httpd -DFOREGROUND
+
+Jul 03 10:24:09 ip-172-31-92-116.ec2.internal systemd[1]: Starting The Apache HTTP Server...
+Jul 03 10:24:09 ip-172-31-92-116.ec2.internal systemd[1]: Started The Apache HTTP Server.
